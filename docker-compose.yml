@@ -1,0 +1,24 @@
+services:
+    postgres:
+        image: postgres
+        environment:
+            - POSTGRES_PASSWORD=123123  
+        ports:
+            - 5432:5432
+        volumes:
+            - /var/lib/postgresql/data
+    mongodb:
+        image: mongo
+        environment:
+            -  MONGO_INITDB_ROOT_USERNAME=davitichkhaidze5
+            - MONGO_INITDB_ROOT_PASSWORD=iayBACeKfUN7XmL5
+        ports:
+            - 27017:27017
+        volumes:
+            - /data/db
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672

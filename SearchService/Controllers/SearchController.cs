@@ -13,7 +13,7 @@ namespace SearchService.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Item>>> SearchItems([FromQuery]SearchParams searchParams)
         {
-            var query = DB.PagedSearch<Item, Item>();
+            var query = DB.PagedSearch<Item, Item>(); // First Item = Type of data that will work on and Second Item = type of data to return
 
          
      

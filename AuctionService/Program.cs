@@ -2,6 +2,8 @@
 using CarsAppBackend.Data;
 using CarsAppBackend.Entities;
 using Microsoft.EntityFrameworkCore;
+using MassTransit;
+
 
 namespace CarsAppBackend
 {
@@ -19,6 +21,13 @@ namespace CarsAppBackend
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
 
             var app = builder.Build();
 
