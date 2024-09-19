@@ -1,4 +1,5 @@
 ﻿using CarsAppBackend.Entities;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarsAppBackend.Data
@@ -18,6 +19,12 @@ namespace CarsAppBackend.Data
                 .HasOne(a => a.Item)
                 .WithOne(i => i.Auction)
                 .HasForeignKey<Item>(i => i.AuctionId);
+
+
+            //It adds table of outbox message,inbox,outboxstate
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();    
         }
     }
 }

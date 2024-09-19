@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CarsAppBackend.DTOs;
 using CarsAppBackend.Entities;
+using Contracts;
 
 namespace CarsAppBackend.RequestHelpers
 {
@@ -18,6 +19,7 @@ namespace CarsAppBackend.RequestHelpers
 
             CreateMap<UpdateAuctionDto, Item>()
                 .ForAllMembers(opts => opts.Condition((src, dst, member) => member != null));
+            CreateMap<AuctionDto, AuctionCreated>();
         }
     }
 }
