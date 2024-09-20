@@ -20,6 +20,8 @@ namespace CarsAppBackend.RequestHelpers
             CreateMap<UpdateAuctionDto, Item>()
                 .ForAllMembers(opts => opts.Condition((src, dst, member) => member != null));
             CreateMap<AuctionDto, AuctionCreated>();
+            CreateMap<Auction, AuctionUpdated>().IncludeMembers(a => a.Item);
+            CreateMap<Item, AuctionUpdated>();
         }
     }
 }

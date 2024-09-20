@@ -1,4 +1,5 @@
 
+using Contracts;
 using MassTransit;
 using MongoDB.Driver;
 using MongoDB.Entities;
@@ -31,6 +32,11 @@ namespace SearchService
                 
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    cfg.ReceiveEndpoint("search-auction-created", e =>
+                    {
+                        e.UseMessageRetry(r => r.Interval(5, 5));
+                        e.ConfigureConsumer<AuctionCreatedConsumer>(context);
+                    });
                     cfg.ConfigureEndpoints(context);
                 });
             });

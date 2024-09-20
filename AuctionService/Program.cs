@@ -3,6 +3,8 @@ using CarsAppBackend.Data;
 using CarsAppBackend.Entities;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
+using Contracts;
+using AuctionService.Consumers;
 
 
 namespace CarsAppBackend
@@ -30,6 +32,10 @@ namespace CarsAppBackend
                     o.UsePostgres();
                     o.UseBusOutbox();
                 });
+
+                x.AddConsumersFromNamespaceContaining<AuctionCreatedFaultConsumer>();
+                x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction", false));
+                
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.ConfigureEndpoints(context);
