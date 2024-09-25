@@ -4,6 +4,7 @@ using CarsAppBackend.DTOs;
 using CarsAppBackend.Entities;
 using Contracts;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,12 +44,14 @@ namespace CarsAppBackend.Controllers
             return Ok(_mapper.Map<AuctionDto>(auction));
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CreateAuctionDto>> CreateAuction(CreateAuctionDto auctionDto)
         {
             var auction = _mapper.Map<Auction>(auctionDto);
-            auction.Seller = "Test";
+
+
+            auction.Seller = User.Identity.Name;
            await _context.Auctions.AddAsync(auction);
 
             var newAuction = _mapper.Map<AuctionDto>(auction);
@@ -65,7 +68,7 @@ namespace CarsAppBackend.Controllers
 
         }
 
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAuction(Guid id, UpdateAuctionDto updateAuctionDto)
         {
@@ -76,6 +79,8 @@ namespace CarsAppBackend.Controllers
 
 
             //Check seller == username
+
+            if (auction.Seller != User.Identity.Name) return Forbid();
 
             _mapper.Map(updateAuctionDto, auction);
             _mapper.Map(updateAuctionDto, auction.Item);
@@ -90,7 +95,7 @@ namespace CarsAppBackend.Controllers
 
         }
 
-
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<ActionResult> DeleteAuction(Guid id)
@@ -98,6 +103,8 @@ namespace CarsAppBackend.Controllers
             var auction = await _context.Auctions.FindAsync(id);
 
             if (auction == null) return NotFound();
+
+            if (auction.Seller != User.Identity.Name) return Forbid();
 
             _context.Auctions.Remove(auction);
 
