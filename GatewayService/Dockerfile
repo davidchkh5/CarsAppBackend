@@ -14,13 +14,12 @@ COPY IdentityService/IdentityService.csproj IdentityService/
 RUN dotnet restore
 
 # Copy all files and build the app
-COPY ./AuctionService ./AuctionService
-COPY ./Contracts ./Contracts
-WORKDIR /src/AuctionService
+COPY ./GatewayService ./GatewayService
+WORKDIR /src/GatewayService
 RUN dotnet publish -c Release -o /app/publish
 
 # Use the ASP.NET runtime image for the final stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "AuctionService.dll"]
+ENTRYPOINT ["dotnet", "GatewayService.dll"]
