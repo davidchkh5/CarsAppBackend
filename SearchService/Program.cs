@@ -44,6 +44,7 @@ namespace SearchService
                         e.ConfigureConsumer<AuctionCreatedConsumer>(context);
                     });
 
+
                     cfg.ConfigureEndpoints(context);
                 });
             });

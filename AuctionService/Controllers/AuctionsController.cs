@@ -85,7 +85,10 @@ namespace CarsAppBackend.Controllers
             _mapper.Map(updateAuctionDto, auction);
             _mapper.Map(updateAuctionDto, auction.Item);
 
-            await _publishEndpoint.Publish<AuctionCreated>(_mapper.Map<AuctionUpdated>(auction)); 
+
+            var mappedPublishObj = _mapper.Map<AuctionUpdated>(auction);
+
+            await _publishEndpoint.Publish(mappedPublishObj); 
 
             var result = await _context.SaveChangesAsync() > 0;
 
