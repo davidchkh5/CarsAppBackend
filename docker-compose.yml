@@ -52,7 +52,6 @@ services:
         ports:
         - 5002:80
         depends_on:
-            - mongodb
             - rabbitmq
     identity-svc:
         image: davidchkh5/identity-svc:latest
