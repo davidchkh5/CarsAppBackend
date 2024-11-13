@@ -55,7 +55,9 @@ namespace SearchService.Controllers
 
             return Ok(new
             {
-                results = result.Results
+                results = result.Results,
+                pageCount = result.PageCount,
+                totalCount = result.TotalCount
             });
         }
 
