@@ -10,8 +10,8 @@ services:
     mongodb:
         image: mongo
         environment:
-            -  MONGO_INITDB_ROOT_USERNAME=davitichkhaidze5
-            - MONGO_INITDB_ROOT_PASSWORD=iayBACeKfUN7XmL5
+            - MONGO_INITDB_ROOT_USERNAME=davitichkhaidze5
+            - MONGO_INITDB_ROOT_PASSWORD=chkh1305
         ports:
             - 27017:27017
         volumes:
@@ -47,7 +47,7 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_URLS=http://+:80
             - RabbitMq__Host=rabbitmq
-            - ConnectionStrings__MongoDbConnection=mongodb+srv://davitichkhaidze5:iayBACeKfUN7XmL5@cluster0.delb4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+            - ConnectionStrings__MongoDbConnection=mongodb+srv://davitichkhaidze5:chkh1305@cluster0.delb4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
             - AuctionServiceUrl=http://auction-svc
         ports:
         - 5002:80
