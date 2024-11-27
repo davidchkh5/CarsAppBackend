@@ -7,6 +7,7 @@ COPY CarsAppBackend.sln .
 COPY AuctionService/AuctionService.csproj AuctionService/
 COPY SearchService/SearchService.csproj SearchService/
 COPY GatewayService/GatewayService.csproj GatewayService/
+COPY BiddingService/BiddingService.csproj BiddingService/
 COPY Contracts/Contracts.csproj Contracts/
 COPY IdentityService/IdentityService.csproj IdentityService/
 

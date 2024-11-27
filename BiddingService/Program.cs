@@ -1,4 +1,5 @@
 using BiddingService.Consumers;
+using BiddingService.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MongoDB.Driver;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 builder.Services.AddMassTransit(x =>
@@ -36,14 +38,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         opt.TokenValidationParameters.NameClaimType = "username";
     });
 
-
+builder.Services.AddHostedService<CheckAuctionFinished>();
+builder.Services.AddScoped<GrpcAuctionClient>();
 
 
 
 var app = builder.Build();
-
-
-
 
 
 

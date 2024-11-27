@@ -6,6 +6,8 @@ using MassTransit;
 using Contracts;
 using AuctionService.Consumers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AuctionService;
+using AuctionService.Services;
 
 
 namespace CarsAppBackend
@@ -57,6 +59,8 @@ namespace CarsAppBackend
                     opt.TokenValidationParameters.NameClaimType = "username";
                 });
 
+
+            builder.Services.AddGrpc();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -69,6 +73,7 @@ namespace CarsAppBackend
 
 
             app.MapControllers();
+            app.MapGrpcService<GrpcAuctionService>();
 
             try
             {

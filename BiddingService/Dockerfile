@@ -1,4 +1,4 @@
-﻿# Use the .NET SDK to build the application
+# Use the .NET SDK to build the application
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
@@ -15,12 +15,13 @@ COPY IdentityService/IdentityService.csproj IdentityService/
 RUN dotnet restore
 
 # Copy all files and build the app
-COPY ./GatewayService ./GatewayService
-WORKDIR /src/GatewayService
+COPY ./BiddingService ./BiddingService
+COPY ./Contracts ./Contracts
+WORKDIR /src/BiddingService
 RUN dotnet publish -c Release -o /app/publish
 
 # Use the ASP.NET runtime image for the final stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "GatewayService.dll"]
+ENTRYPOINT ["dotnet", "BiddingService.dll"]
