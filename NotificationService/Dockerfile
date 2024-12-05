@@ -7,8 +7,8 @@ COPY CarsAppBackend.sln .
 COPY AuctionService/AuctionService.csproj AuctionService/
 COPY SearchService/SearchService.csproj SearchService/
 COPY GatewayService/GatewayService.csproj GatewayService/
-COPY BiddingService/BiddingService.csproj BiddingService/
 COPY NotificationService/NotificationService.csproj NotificationService/
+COPY BiddingService/BiddingService.csproj BiddingService/
 COPY Contracts/Contracts.csproj Contracts/
 COPY IdentityService/IdentityService.csproj IdentityService/
 
@@ -16,13 +16,13 @@ COPY IdentityService/IdentityService.csproj IdentityService/
 RUN dotnet restore
 
 # Copy all files and build the app
-COPY ./SearchService ./SearchService
+COPY ./NotificationService ./NotificationService
 COPY ./Contracts ./Contracts
-WORKDIR /src/SearchService
+WORKDIR /src/NotificationService
 RUN dotnet publish -c Release -o /app/publish
 
 # Use the ASP.NET runtime image for the final stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "SearchService.dll"]
+ENTRYPOINT ["dotnet", "NotificationService.dll"]

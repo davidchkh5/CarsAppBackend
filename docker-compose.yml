@@ -98,3 +98,16 @@ services:
             - ASPNETCORE_URLS=http://+:80
         ports:
         - 6001:80
+    notify-svc:
+        image: davidchkh5/notify-svc:latest
+        build:
+            context: .
+            dockerfile: NotificationService/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://+:80
+            - RabbitMq__Host=rabbitmq
+        ports:
+        - 5004:80
+        depends_on:
+            - rabbitmq    
